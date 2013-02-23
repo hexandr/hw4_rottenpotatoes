@@ -64,4 +64,12 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
+  def similar_movies
+    movie = Movie.find(params[:id])
+    if(movie.director.to_s == '')
+        flash[:notice] = "'#{movie.title}' has no director info"
+	redirect_to root_path
+    end
+    @movies = Movie.similar_movies(movie.director)
+  end
 end
